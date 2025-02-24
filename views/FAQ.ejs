@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/navbar') %> 
+    <h1>FAQ</h1>
+    <details>
+        <summary>Hva er formålet med ReinsdyrOppgave-prosjektet?</summary>
+        <p>
+          Prosjektet er en forberedelsesoppgave for prøveeksamen, der målet er å demonstrere hvordan man kan bygge et komplett system for registrering og søk av reinsdyr. Løsningen skal vise sammenhengen mellom frontend og backend, samtidig som den ivaretar sikkerhet, databasehåndtering og systemarkitektur.
+        </p>
+      </details>
+      
+      <details>
+        <summary>Hvilke teknologier og verktøy brukes i løsningen?</summary>
+        <p>
+          Løsningen benytter Node.js for serverlogikk, Express som webserver, MongoDB for databasen og EJS for templating. I tillegg brukes JWT for sikker autentisering, bcrypt for passordkryptering og dotenv for håndtering av miljøvariabler. Enkel CSS bidrar til en ryddig presentasjon.
+        </p>
+      </details>
+      
+      <details>
+        <summary>Hvordan sikres autentiseringen i systemet?</summary>
+        <p>
+          Ved pålogging genereres et JWT (JSON Web Token) med brukerens unike UUID, som signeres med en hemmelig nøkkel. Tokenet lagres i en httpOnly cookie, og passordene krypteres med bcrypt før lagring i databasen. Dette sikrer at kun autoriserte brukere får tilgang til registrering av reinsdyr.
+        </p>
+      </details>
+      
+      <details>
+        <summary>Hvordan registreres og søkes reinsdyr i databasen?</summary>
+        <p>
+          Kun innloggede brukere får tilgang til siden for registrering av reinsdyr. Hvert reinsdyr registreres med detaljerte data som kobles til eieren. Søkefunksjonen på landingssiden lar brukere finne informasjon basert på alle felter i databasen, slik at både eiere og reinsdyr enkelt kan identifiseres.
+        </p>
+      </details>
+      
+      <details>
+        <summary>Hvilke videreutviklingsmuligheter finnes for løsningen?</summary>
+        <p>
+          Mulige videreutviklinger inkluderer avanserte søkefunksjoner, forbedret brukergrensesnitt og utvidet sikkerhet. Andre tiltak kan være optimalisering av databaseforespørsler, et administrasjonspanel for eiere, samt en detaljert rapport som dokumenterer designvalg og fremtidige forbedringspotensialer.
+        </p>
+      </details>
+      
+      
+</body>
+</html>
