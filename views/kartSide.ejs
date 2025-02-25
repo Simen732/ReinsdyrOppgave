@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <%- include('partials/header') %>
 <body>
     <%- include('partials/navbar') %> 
-    <h1>Dette er et kart over de forskjellige samiske språkområdene i Norge</h1>
-
-    <img src="/img/Kart.jpeg" alt="Kart over språkområdene i Norge">
+    
+    <div class="container">
+        <h1>Samiske Språkområder i Norge</h1>
+        
+        <div class="form-container">
+            <p>Dette er et kart over de forskjellige samiske språkområdene i Norge</p>
+            
+            <div class="map-container">
+                <img src="/img/Kart.jpeg" alt="Kart over språkområdene i Norge" class="responsive-image">
+            </div>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
 </body>
 </html>

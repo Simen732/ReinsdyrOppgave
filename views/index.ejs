@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <%- include('partials/header') %>
 <body>
     <%- include('partials/navbar') %> 
-    <h1>Hello World</h1>
+    
+    <div class="container">
+        <h1>Reinsdyr Oversikt</h1>
+        
+        <form action="/" method="GET" class="search-form">
+            <input type="text" name="search" id="searchBar" placeholder="Søk etter reinsdyr" value="<%= typeof search !== 'undefined' ? search : '' %>">
+            <button type="submit" id="searchButton">Søk</button>
+        </form>
 
+        <div id="reinsdyr-list">
+            <% if (reinsdyr && reinsdyr.length > 0) { %>
+                <% reinsdyr.forEach(function(r) { %>
+                    <div class="reinsdyr-box">
+                        <h3><%= r.navn %></h3>
+                        <p><strong>Nummer:</strong> <%= r.serieNummer %></p>
+                        <p><strong>Eier:</strong> <%= r.eierNavn %></p>
+                        <p><strong>Flokk:</strong> <%= r.flokkNavn %></p>
+                        <p><strong>Født:</strong> <%= r.fødselsdato ? new Date(r.fødselsdato).toLocaleDateString('no-NO') : 'N/A' %></p>
+                    </div>
+                    
+                <% }); %>
+            <% } else { %>
+                <div class="form-container">
+                    <p>Ingen reinsdyr funnet.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
 </body>
 </html>

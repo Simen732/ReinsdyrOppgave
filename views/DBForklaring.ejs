@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <%- include('partials/header') %>
 <body>
     <%- include('partials/navbar') %> 
-    <h1>Hello World</h1>
+    
+    <div class="container">
+        <h1>Database Forklaring</h1>
 
-    <a href="https://github.com/users/Simen732/projects/3/views/1">Github Project</a>
-    <p>Her er en forklaring av hvordan databasen fungerer og en lenke til github projects</p>
-    <img src="/img/ER-diagram.png" alt="ER diagram over databasen">
+        <div class="form-container">
+            <p id= "ERdiagramText" >Databesen fungerer ved at informasjon lagres i de forskjellige tablene som er vist nedenfor. Eier er tablen som inneholder informasjon om eierene og er ikke avhengig av noen av de andre tablene. Den andre tablene er flokk tablen som er avhengig av Eier siden den henter ut eierens id. Jeg valgte å lagre dataen til hver individuele reinsdyr som en del av flokk tablene siden jeg tenkte dette var mer praktisk og effektivt. Det samme blir gjort med beiteområdene. </p>
+            <a href="https://github.com/users/Simen732/projects/3/views/1" class="btn">Github Project</a>
+            
+            <div class="map-container">
+                <img src="/img/ER-diagram.png"  alt="ER diagram over databasen" class="responsive-image">
+            </div>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
 </body>
 </html>

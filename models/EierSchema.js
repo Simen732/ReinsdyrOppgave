@@ -10,7 +10,7 @@ const eierSchema = new mongoose.Schema({
   uuid: { type: String, default: uuidv4, required: true },
   epost: { type: String, required: true },
   password: { type: String, required: true },
-  kontaktspråk: { type: String, required: true },
+  kontaktsprak: { type: String, required: true },
   tellefonNummer: { type: String, required: true },
 }, { collection: 'eiers' });  
 
