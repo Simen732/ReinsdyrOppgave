@@ -12,6 +12,7 @@ const eierSchema = new mongoose.Schema({
   password: { type: String, required: true },
   kontaktsprak: { type: String, required: true },
   tellefonNummer: { type: String, required: true },
+  flokker: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Flokk' }]
 }, { collection: 'eiers' });  
 
 // Create an Eier model

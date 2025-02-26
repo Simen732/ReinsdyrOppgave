@@ -1,35 +1,26 @@
-const IndividueltReinsdyr = require('../models/individueltReinsdyrSchema.js');
-const Flokk = require('../models/FlokkSchema.js'); // Make sure to create this schema
-const jwt = require('jsonwebtoken');
+const Flokk = require('../models/FlokkSchema.js');
+const Eier = require('../models/EierSchema.js');
 
 const ReinsdyrController = {
-    RenderRegister: (req, res) => {
-        const token = req.cookies.token;
-        if (!token) {
-            return res.redirect('/auth/login');
+    RenderRegister: async (req, res) => {
+        try {
+            const eierId = req.user.eierId;
+            const eier = await Eier.findById(eierId).populate('flokker');
+            res.render('RegistrerReinsdyr', { userId: req.user.userId, flokker: eier.flokker });
+        } catch (err) {
+            console.error('Error fetching flocks:', err);
+            res.status(500).send('Error fetching flocks: ' + err.message);
         }
-        jwt.verify(token, 'shhhhh', (err, decoded) => {
-            if (err) {
-                return res.redirect('/auth/login');
-            }
-            res.render('RegistrerReinsdyr', { userId: decoded.userId });
-        });
     },
 
     register: async (req, res) => {
         try {
-            const token = req.cookies.token;
-            if (!token) {
-                return res.status(401).send('Unauthorized: No token provided');
-            }
-
-            const decoded = jwt.verify(token, process.env.JWT_SECRET || 'shhhhh');
-            const eierId = decoded.eierId;
+            const flokkId = req.body.flokkId; // New line to get the selected flock ID
             
-            const eierFlokk = await Flokk.findOne({ eier: eierId });
+            const eierFlokk = await Flokk.findById(flokkId);
             
             if (!eierFlokk) {
-                return res.status(404).send('Flock not found for this eier');
+                return res.status(404).send('Flock not found');
             }
 
             const newReinsdyr = {
@@ -47,7 +38,6 @@ const ReinsdyrController = {
             res.status(500).send('Error registering reindeer: ' + err.message);
         }
     }
-       
 };
 
 module.exports = ReinsdyrController;

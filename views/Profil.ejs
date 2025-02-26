@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/header') %>
+<body>
+  <%- include('partials/navbar') %>
+  
+  <div class="container">
+    <h1>Min Profil</h1>
+
+    <div class="profile-section">
+      <h2>Bruker informasjon</h2>
+      <div class="profile-card">
+        <div class="profile-details">
+          <p><strong>Navn:</strong> <%= eier.navn %></p>
+          <p><strong>Email:</strong> <%= eier.epost %></p>
+          <p><strong>Telefon:</strong> <%= eier.tellefonNummer %></p>
+          <!-- Add other eier details as needed -->
+        </div>
+      </div>
+    </div>
+
+<div class="profile-section">
+  <h2>Overføringsforespørsler</h2>
+  <% if (transferRequests && transferRequests.length > 0) { %>
+    <h3>Mottatte forespørsler</h3>
+    <ul>
+      <% transferRequests.filter(req => req.toUser === eier._id.toString()).forEach(request => { %>
+        <li>
+          <%= request.fromUser %> ønsker å sende deg reinsdyret <%= request.reinsdyr %>
+          <form action="/transfer/accept-transfer" method="POST">
+            <input type="hidden" name="requestId" value="<%= request._id %>">
+            <button type="submit">Godta</button>
+          </form>
+          <form action="/transfer/decline-transfer" method="POST">
+            <input type="hidden" name="requestId" value="<%= request._id %>">
+            <button type="submit">Avslå</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+    
+    <h3>Sendte forespørsler</h3>
+    <ul>
+      <% transferRequests.filter(req => req.fromUser === eier._id.toString()).forEach(request => { %>
+        <li>
+          Du har sendt en forespørsel om å overføre reinsdyret <%= request.reinsdyr %> til <%= request.toUser %>
+          <form action="/transfer/cancel-transfer" method="POST">
+            <input type="hidden" name="requestId" value="<%= request._id %>">
+            <button type="submit">Kanseller</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>Ingen ventende overføringsforespørsler</p>
+  <% } %>
+</div>
+
+    
+    <div class="profile-section">
+      <h2>Mine Flokker</h2>
+      <div id="flokk-list">
+        <% if (flokker && flokker.length > 0) { %>
+          <% flokker.forEach(flokk => { %>
+            <div class="flokk-card">
+              <div class="flokk-header">
+                <h3><%= flokk.flokkNavn %></h3>
+                <span class="flokk-count"><%= flokk.reinsdyr.length %> reinsdyr</span>
+              </div>
+              <div class="flokk-actions">
+                <a href="/flokk/<%= flokk._id %>/reinsdyr" class="btn">Se reinsdyr</a>
+              </div>
+              
+              <% if (flokk.reinsdyr.length > 0) { %>
+                <div class="transfer-section">
+                  <h4>Overfør reinsdyr:</h4>
+                  <div class="transfer-list">
+                    <% flokk.reinsdyr.forEach(reinsdyr => { %>
+                      <form action="/flokk/transfer-reinsdyr" method="POST" class="transfer-form">
+                        <input type="hidden" name="fromFlokkId" value="<%= flokk._id %>">
+                        <input type="hidden" name="reinsdyrId" value="<%= reinsdyr._id %>">
+                        <div class="transfer-item">
+                          <span class="reinsdyr-name"><%= reinsdyr.navn %></span>
+                          <div class="transfer-controls">
+                            <select name="toFlokkId" class="transfer-select">
+                              <option disabled selected>Velg flokk</option>
+                              <% flokker.forEach(toFlokk => { %>
+                                <% if (toFlokk._id.toString() !== flokk._id.toString()) { %>
+                                  <option value="<%= toFlokk._id %>"><%= toFlokk.flokkNavn %></option>
+                                <% } %>
+                              <% }); %>
+                            </select>
+                            <button type="submit" class="transfer-btn">Overfør</button>
+                          </div>
+                        </div>
+                      </form>
+                    <% }); %>
+                  </div>
+                </div>
+                <div class="transfer-section">
+                  <h4>Overfør reinsdyr til annen bruker:</h4>
+                  <% flokk.reinsdyr.forEach(reinsdyr => { %>
+                    <form action="/transfer/initiate-transfer" method="POST" class="transfer-form">
+                      <input type="hidden" name="reinsdyrId" value="<%= reinsdyr._id %>">
+                      <input type="hidden" name="flokkId" value="<%= flokk._id %>">
+                      <div class="transfer-item">
+                        <span class="reinsdyr-name"><%= reinsdyr.navn %></span>
+                        <div class="transfer-controls">
+                          <input type="email" name="toUserEmail" placeholder="Mottakers e-postadresse" required>
+                          <button type="submit" class="transfer-btn">Initier overføring</button>
+                        </div>
+                      </div>
+                    </form>
+                  <% }); %>
+                </div>                
+              <% } %>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <div class="empty-state">
+            <p>Du har ingen flokker ennå.</p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+    
+    <div class="add-flokk-container">
+      <a href="/flokk/add" class="btn add-flokk-btn">+ Opprett ny flokk</a>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+</body>
+</html>

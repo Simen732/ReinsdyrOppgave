@@ -10,6 +10,14 @@
         <div class="form-container">
             <form action="/reinsdyr/RegistrerReinsdyr" method="post">
                 <div class="form-group">
+                    <label for="flokkId">Velg flokk</label>
+                    <select id="flokkId" name="flokkId" required>
+                        <% flokker.forEach(flokk => { %>
+                            <option value="<%= flokk._id %>"><%= flokk.flokkNavn %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="serieNummer">Serie nummer</label>
                     <input type="number" id="serieNummer" name="serieNummer" placeholder="Reinsdyrets serie nummer" required>
                 </div>

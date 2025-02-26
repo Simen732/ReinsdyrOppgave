@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/header') %>
+<body>
+    <%- include('partials/navbar') %> 
+    
+    <h1>Add New Flock</h1>
+    <form action="/flokk/add" method="POST" enctype="multipart/form-data">
+        <label for="flokkNavn">Flock Name:</label>
+        <input type="text" id="flokkNavn" name="flokkNavn" required><br><br>
+
+        <label for="buemerkeNavn">Earmark Name:</label>
+        <input type="text" id="buemerkeNavn" name="buemerkeNavn" required><br><br>
+
+        <label for="buemerkeBilde">Earmark Image:</label>
+        <input type="file" id="buemerkeBilde" name="buemerkeBilde"><br><br>
+
+        <label for="beiteomrade">Grazing Area:</label>
+        <input type="text" id="beiteomrade" name="beiteomrade" required><br><br>
+
+        <button type="submit">Add Flock</button>
+    </form>
+    <%- include('partials/footer') %>
+</body>
+</html>

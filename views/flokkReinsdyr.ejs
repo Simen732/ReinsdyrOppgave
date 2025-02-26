@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/header') %>
+<body>
+  <%- include('partials/navbar') %>
+  
+  <div class="container">
+    <h1><%= flokk.flokkNavn %> - Reinsdyr</h1>
+    
+    <div id="reinsdyr-list">
+      <% if (reinsdyr && reinsdyr.length > 0) { %>
+        <% reinsdyr.forEach(dyr => { %>
+          <div class="reinsdyr-box">
+            <h3><%= dyr.navn %></h3>
+            <p>Nummer: <%= dyr.serieNummer %></p>
+            <p>Født: <%= dyr.fødselsdato %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>Denne flokken har ingen reinsdyr ennå.</p>
+      <% } %>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="/flokk/mine" class="btn">Tilbake til mine flokker</a>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+</body>
+</html>

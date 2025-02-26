@@ -9,22 +9,25 @@ const cookieParser = require('cookie-parser');
 const Flokk = require('./models/FlokkSchema');
 const Eier = require('./models/EierSchema');
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+const verifyToken = require('./middleware/jwtVerify.js');
+const flokkRoutes = require('./routes/flokkRoutes');
+const transferRoutes = require('./routes/transferRoutes.js');
 
-mongoose.connect('mongodb://localhost:27017/', {});
+
+mongoose.connect(process.env.MONGODB_URI, {});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(cookieParser());
 
-
 app.set('view engine', 'ejs');
-
 
 app.use('/auth', authRoutes);
 app.use('/reinsdyr', reinsdyrRoutes);
-
+app.use('/flokk', flokkRoutes);
+app.use('/transfer', transferRoutes);
 
 app.get(['/', '/index'], async (req, res) => {
     console.log('Route handler started');
@@ -97,7 +100,6 @@ app.get('/kartSide', (req, res) => {
 app.get('/DBforklaring', (req, res) => {
     res.render('DBforklaring');
 });
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
