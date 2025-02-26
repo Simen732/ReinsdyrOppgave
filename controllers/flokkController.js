@@ -17,7 +17,7 @@ const FlokkController = {
                 flokkNavn: req.body.flokkNavn,
                 serieIndeling: uuidv4(),
                 buemerkeNavn: req.body.buemerkeNavn,
-                buemerkeBilde: req.file ? req.file.filename : null,
+                buemerkeBilde: req.file.filename,
                 beiteomrade: req.body.beiteomrade,
                 reinsdyr: []
             });

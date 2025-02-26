@@ -8,7 +8,6 @@ const TransferController = {
           const { toUserEmail, reinsdyrId, flokkId } = req.body;
           const fromUserId = req.user.eierId;
       
-          console.log('Initiating transfer:', { fromUserId, toUserEmail, reinsdyrId, flokkId });
       
           // Find the recipient user by email
           const toUser = await Eier.findOne({ epost: toUserEmail });
@@ -25,7 +24,6 @@ const TransferController = {
           });
       
           const savedRequest = await newTransferRequest.save();
-          console.log('Transfer request saved:', savedRequest);
       
           res.redirect('/flokk/profil');
         } catch (err) {
