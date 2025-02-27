@@ -23,7 +23,7 @@ erDiagram
     REINSDYR {
         number serieNummer
         string navn
-        date fødselsdato
+        date fodselsdato
     }
     TRANSFER_REQUEST {
         string _id PK
