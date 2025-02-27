@@ -35,7 +35,6 @@ const authController = {
     
             const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
     
-            // const eieruuid = uuidv4();
 
             const newEier = new Eier({
                 navn: req.body.navn,
@@ -59,13 +58,7 @@ const authController = {
             //   });
     
             // await newFlokk.save();
-    
-            // Create a JWT token for the new eier
-            const token = jwt.sign({ eierId: newEier._id }, 'shhhhh', { expiresIn: '1h' });
-    
-            // Set the token as a cookie
-            res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // 1 hour expiry
-    
+        
             res.render('login');
         } catch (err) {
             console.error(err);
