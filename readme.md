@@ -1,5 +1,46 @@
 # ReinsdyrOppgave
 
+## er-diagram
+```mermaid
+erDiagram
+    EIER {
+        string uuid PK
+        string navn
+        string epost
+        string password
+        string kontaktsprak
+        string tellefonNummer
+    }
+    FLOKK {
+        string _id PK
+        string eier FK
+        string flokkNavn
+        string serieIndeling
+        string buemerkeNavn
+        string buemerkeBilde
+        string beiteomrade
+    }
+    REINSDYR {
+        number serieNummer
+        string navn
+        date fødselsdato
+    }
+    TRANSFER_REQUEST {
+        string _id PK
+        string fromUser FK
+        string toUser FK
+        string reinsdyr FK
+        string fromFlokk FK
+        string status
+        date createdAt
+    }
+    EIER ||--o{ FLOKK : "has"
+    FLOKK ||--o{ REINSDYR : "contains"
+    EIER ||--o{ TRANSFER_REQUEST : "initiates/receives"
+    FLOKK ||--o{ TRANSFER_REQUEST : "involved in"
+    REINSDYR ||--o{ TRANSFER_REQUEST : "subject of"
+```
+
 ## API Documentation
 
 ### Authentication
